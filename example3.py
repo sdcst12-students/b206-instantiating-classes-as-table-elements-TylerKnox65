@@ -5,7 +5,11 @@
 class powers:
     val = 0
     def square(self):
-        return self.val**2         
+        try:
+            answer = self.val**2
+        except:
+            answer = "non number"
+        return answer   
 
     def __init__(self,v): 
         #Constructor         
@@ -16,7 +20,7 @@ class powers:
 numbers = {}
 
 # Instantiate 10 instances
-namedIndexes = [5,10,15,20]
+namedIndexes = ["tyler","anson",15,20]
 for i in namedIndexes:
     numbers[i] = powers(i)
 

@@ -9,10 +9,25 @@ set2 = [7, 12, 7, 7, 5, 11, 4, 12, 8, 5, 3, 8, 7, 7, 8, 5, 7, 8, 11, 6, 6, 9, 11
 set3 =[13, 12, 7, 12, 12, 10, 11, 10, 11, 10, 13, 12, 5, 11, 9, 11, 11, 9, 12, 10, 7, 7, 10, 9, 12, 13, 7, 12, 9, 11, 9, 12, 12, 13, 11, 12, 8, 9, 16, 11, 9, 13, 11, 5, 12, 9, 14, 9, 10, 14, 10, 8, 10, 7, 7, 14, 8, 9, 5, 11, 12, 9, 12, 10, 11, 14, 12, 7, 15, 8, 8, 7, 11, 12, 14, 10, 9, 10, 13, 10, 11, 10, 11, 12, 10, 11, 9, 9, 11, 10, 13, 10, 9, 13, 8, 10, 7, 12, 9, 9]
 
 def mean(data):
-    return 
+    temp = 0
+    count = 0
+    for i in data:
+        temp += i
+        count += 1
+    return (temp/count)
 
 def sd(data):
-    return
+    deviation = []
+    temp = 0
+    meanVal = mean(data)
+    for i in data:
+        deviation.append((i-meanVal)**2)
+    for i in deviation:
+        temp += i
+    temp = (temp / (len(deviation))) ** (1/2)
+    
+
+    return temp
 
 assert round(mean(set1),2) == 10.77
 assert round(sd(set1),2) == 3.19
