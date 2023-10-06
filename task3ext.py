@@ -1,4 +1,5 @@
 import random
+import names 
 '''
 Rules:
 
@@ -19,6 +20,8 @@ Wealth (in copper. For example 2 gold, 3 silver and 4 copper has a wealth of 234
 '''
 class NPC:
     stats = { 'str' : 0, 'int' : 0, 'pie' : 0, 'agi' : 0, 'stm' : 0, 'cha' : 0 }
+    equipment = {"Headwear": {"Iron cap":2, "Leather cap":1, "Helmet":3}, "Armor": {"Studded Leather":9, "Chainmail":21, "Scalemail":15, "Platemail":29}, "Shield": {"Buckler":1, "Embossed Leather":2, "Kite":4}}
+    #headwear: iron cap (2), leather cap (1), helmet (3) armor: studded leather(9), chainmail(21), scalemail(15), platemail(29) shield: buckler(1), embossed leather shield(2), kite shield(4)
     level = 0
     hp = 0
     gold = 0
@@ -28,6 +31,10 @@ class NPC:
     def __init__(self):
         self.levelpick()
         self.stats = { 'str' : 0, 'int' : 0, 'pie' : 0, 'agi' : 0, 'stm' : 0, 'cha' : 0 }
+        self.name = names.get_full_name()
+        self.HPpick()
+        self.statspick()
+        self.getequip()
     def levelpick(self):
         levelchoice = ['1'] * 40 + ['2'] * 30 + ['3'] * 20 + ["4"] *10
         levelchoice = random.choice(levelchoice)
@@ -72,50 +79,25 @@ class NPC:
             for o in range(3):
                 self.stats[i] += random.randint(1,6)
         return self.stats
-    
-        '''
-        statchoice = []
-        for i in range(3):
-            statchoice.append(random.choice(stat))
-        return statchoice
-        '''
-    '''
-    def calcMeanDeviation(self):
-        #HP DEVIATION
-        count = 0
-        temp = 0
-        for i in self.deviation:
-            count += 1
-            temp += i
-        self.mean = temp/count
-        deviationList = []
-        temp = 0                        THIS IS SO SAD, BOOGOO :( :()
+    def getequip(self):
+        self.headwear = random.choice(list(self.equipment["Headwear"]))
+        self.armor = random.choice(list(self.equipment["Armor"]))
+        self.shield = random.choice(list(self.equipment["Shield"]))
+        self.armorRating = self.equipment["Headwear"][self.headwear] + self.equipment["Armor"][self.armor] + self.equipment["Shield"][self.shield]
+        return self.armorRating, self.headwear, self.armor, self.shield
+    def display(self):
+        print(f"\033[38;2;255;255;255;48m--------------------------------------------------------------------------------------------------------------\n\n\033[3;30;48m Name: {self.name}\n\n\033[1;31;48m HP: {self.hp} \n\n\033[38;2;128;0;128;48mTotal wealth: \033[1;33;48m{self.gold} Gold, \033[1;30;48m{self.silver} Silver, \033[38;2;184;115;51;48m{self.copper} Copper \n\n\033[38;2;255;0;0;48mStats: Strength:{self.stats['str']}, \033[38;2;68;154;249;48mIntelligence:{self.stats['int']}, \033[38;2;255;255;255;48mPiety:{self.stats['pie']}, \033[38;2;0;100;0;48mAgility:{self.stats['agi']}, \033[38;2;144;238;144;48mStamina:{self.stats['stm']}, \033[38;2;255;192;203;48mCharisma:{self.stats['cha']}\n\n\033[38;2;0;0;0;48mEquipment: \033[38;2;200;200;200;48mHelm: {self.headwear}, Armor: {self.armor}, Shield: {self.shield}\n\n\033[38;2;255;192;203;48mLevel: {self.level}\n")
         
-        for i in self.deviation:
-            deviationList.append((i-self.mean)**2)
-        for i in deviationList:
-            temp += i
-        self.deviationCalc = (temp / (len(deviationList))) ** (1/2)
-        return round(self.mean,2) , round(self.deviationCalc,2)
-
-    def calcMeanWealth(self):
-        goldConv = self.gold*100
-        silvConv = self.silver*10
-        copper = self.copper
-    '''
-
-
-
+        #184, 115, 51
 
 levelList = []
 wealthList = []
 totalLevel = 0
 totalWealth = 0
 for i in range(100):
+    
     x = NPC()
-    stats = x.statspick()
-    print(stats, i)
-    x.HPpick()
+    
 
     level = x.levelpick()
     totalLevel += level
@@ -124,6 +106,7 @@ for i in range(100):
     wealth = x.goldpick()
     totalWealth += wealth
     wealthList.append(wealth)
+    x.display()
     x = None
 def meanCalc(listin, total):
     mean = total / len(listin) #9
@@ -137,3 +120,4 @@ def meanCalc(listin, total):
     deviation = (temp / (len(deviationList))) ** (1/2)
     return round(mean,2), round(deviation,2)
 print(f"Level mean and deviation is: {meanCalc(levelList, totalLevel)}. Wealth mean and deviation is: {meanCalc(wealthList, totalWealth)}")
+
