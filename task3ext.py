@@ -14,7 +14,7 @@ each gold is worth 10 silver and each silver is worth 10 copper
 Create 100 NPC's Generate a report that shows the distribution of NPC's by level 
 Generatea a report that shows the mean and standard deviation for the following:
 
-HP
+levl
 Wealth (in copper. For example 2 gold, 3 silver and 4 copper has a wealth of 234)
 
 '''
